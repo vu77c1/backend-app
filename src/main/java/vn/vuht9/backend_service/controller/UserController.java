@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/test")
-public class HelloController {
+public class UserController {
     @Operation(summary = "test API")
     @GetMapping("hello")
     public String getMethodName(@RequestParam String param) {
