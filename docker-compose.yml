@@ -28,7 +28,7 @@ services:
       - postgres:/data/postgres
       - ./initdb.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - '5431:5432'
+      - '5432:5432'
     networks:
       - default
 
@@ -42,7 +42,7 @@ services:
       - "8080:8080"
     environment:
       DATABASE_HOST: host.docker.internal
-      DATABASE_PORT: 5431
+      DATABASE_PORT: 5432
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: 123456
       LOGSTASH_HOST: host.docker.internal:5600
@@ -60,32 +60,32 @@ services:
     networks:
       - default
 
-#  kibana:
-#    image: kibana:7.14.1
-#    container_name: kibana
-#    restart: always
-#    ports:
-#      - "5601:5601"
-#    environment:
-#      - ELASTICSEARCH_HOSTS=http://elastic-search:9200
-#    networks:
-#      - default
-#
-#  logstash:
-#    image: logstash:7.14.1
-#    container_name: logstash
-#    restart: always
-#    ports:
-#      - "5600:5600" # Socket port
-#      - "5044:5044"
-#    #      - "9600:9600"
-#    volumes:
-#      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-#    environment:
-#      - XPACK_MONITORING_ELASTICSEARCH_HOSTS=http://elastic-search:9200
-#      - XPACK_MONITORING_ENABLED=true
-#    networks:
-#      - default
+  kibana:
+    image: kibana:7.14.1
+    container_name: kibana
+    restart: always
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elastic-search:9200
+    networks:
+      - default
+
+  logstash:
+    image: logstash:7.14.1
+    container_name: logstash
+    restart: always
+    ports:
+      - "5600:5600" # Socket port
+      - "5044:5044"
+    #      - "9600:9600"
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    environment:
+      - XPACK_MONITORING_ELASTICSEARCH_HOSTS=http://elastic-search:9200
+      - XPACK_MONITORING_ENABLED=true
+    networks:
+      - default
 
 networks:
   default:
